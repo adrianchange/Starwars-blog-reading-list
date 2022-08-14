@@ -1,45 +1,42 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			storePeople: [],
+			storePlanets: [],
+			storeVehicles: [], 
+			storeFavorites: [], 
+			storeDetails: {}
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			setPeople: (people)=>{
+				const store = getStore()
+				setStore({...store, storePeople:people})
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
+
+			setPlanets: (planets)=>{
+				const store = getStore()
+				setStore({...store, storePlanets:planets})
+			}, 
+
+			setVehicles: (vehicles)=>{
+				const store = getStore()
+				setStore({...store, storeVehicles:vehicles})
+			}, 
+			
+			setFavorites: (name)=>{
+				const store = getStore()
+				setStore({...store, storeFavorites:[...store.storeFavorites, name]})
+			}, 
+			
+			deleteFavorites: (name) => {
 				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+					setStore({...store, storeFavorites:[store.storeFavorites.filter((fav) => fav != name)]})
+				
 			}
+
 		}
 	};
 };
+console.log(store.setFavorites);
 
 export default getState;
